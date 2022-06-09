@@ -1,7 +1,9 @@
+package guru.qa.tests;
 
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Test;
 
+import static guru.qa.tests.TestData.*;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static io.restassured.http.ContentType.JSON;
@@ -32,11 +34,7 @@ public class APITest extends TestBase {
                 .log().body()
                 .when()
                 .contentType(JSON)
-                .body("{\n" +
-                        "    \"name\": \"Chzu Bajie\",\n" +
-                        "    \"job\": \"looser\",\n" +
-                        "    \"type\": \"Human-pig\"" +
-                        "}")
+                .body(createUserJson)
                 .post("/api/users")
                 .then().log().all()
                 .statusCode(201)
@@ -51,12 +49,7 @@ public class APITest extends TestBase {
     void updateUserTest() {
         given().log().all()
                 .contentType(JSON)
-                .body("{\n" +
-                        "    \"name\": \"Chzu Bajie\",\n" +
-                        "    \"job\": \"Heavenly Tumbleweed\",\n" +
-                        "    \"type\": \"Human-pig\",\n" +
-                        "    \"Buddhist_name\": \"Zhu Wuneng\"" +
-                        "}")
+                .body(updateUserJson)
                 .when()
                 .put("api/users/2")
                 .then()
@@ -87,10 +80,7 @@ public class APITest extends TestBase {
         given().log().all()
                 .when()
                 .contentType(JSON)
-                .body("{\n" +
-                        "    \"email\": \"czhu.bajie@reqres.in\",\n" +
-                        "    \"password\": \"pistol\"\n" +
-                        "}")
+                .body(registerUserJson)
                 .post("/api/register")
                 .then()
                 .log().all()
