@@ -9,13 +9,16 @@ repositories {
     mavenCentral()
 }
 
+def allureVersion = "2.17.3"
+
 dependencies {
     testImplementation (
-            'io.rest-assured:rest-assured:5.0.1',
-            "org.assertj:assertj-core:3.22.0",
+            'io.rest-assured:rest-assured:5.1.0',
+            'org.assertj:assertj-core:3.23.1',
             "org.junit.jupiter:junit-jupiter:5.8.2",
             "org.slf4j:slf4j-simple:1.7.36",
-            "org.hamcrest:hamcrest-all:1.3")
+            "org.hamcrest:hamcrest-all:1.3",
+            "com.codeborne:selenide:6.6.3")
 
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
