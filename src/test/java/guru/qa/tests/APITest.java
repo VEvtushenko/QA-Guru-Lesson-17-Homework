@@ -1,17 +1,24 @@
 package guru.qa.tests;
 
+import io.qameta.allure.*;
 import jdk.jfr.Description;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static guru.qa.tests.TestData.*;
+import static guru.qa.data.TestData.*;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.*;
 
+@Owner("Vladimir Evtushenko")
+@Feature("DemoQA")
+@Link(value = "QA Guru, Lesson 18, Lombok&Groovy Homework", url = "https://github.com/VEvtushenko/QA-Guru-Lesson-17-Homework")
 public class APITest extends TestBase {
     @Test
     @Description("Test get user information about Janet Weaver")
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Test get user")
     void singleUserTest() {
         when()
                 .get("api/users/2")
@@ -29,6 +36,8 @@ public class APITest extends TestBase {
 
     @Test
     @Description("Create user")
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Test get user")
     void createUserTest() {
         given().log().uri()
                 .log().body()
@@ -46,6 +55,8 @@ public class APITest extends TestBase {
 
     @Test
     @Description("Update user")
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Test get user")
     void updateUserTest() {
         given().log().all()
                 .contentType(JSON)
@@ -63,6 +74,8 @@ public class APITest extends TestBase {
 
     @Test
     @Description("List of users test")
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Test get user")
     void listUserTest() {
         given().log().uri()
                 .log().body()
@@ -76,6 +89,8 @@ public class APITest extends TestBase {
 
     @Test
     @Description("Registration with error ")
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Test get user")
     void registrationWithErrorTest() {
         given().log().all()
                 .when()
