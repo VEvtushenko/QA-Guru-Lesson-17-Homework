@@ -30,11 +30,9 @@ dependencies {
             "org.junit.jupiter:junit-jupiter:$junitVersion",
             "org.slf4j:slf4j-simple:$slf4jVersion",
             "org.hamcrest:hamcrest-all:$hamcrestVersion",
-            "com.fasterxml.jackson.core:jackson-core:$jacksonVersion",
+            "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
             "io.qameta.allure:allure-rest-assured:$allureVersion",
             "org.aeonbits.owner:owner:$ownerVersion",
-            "io.qameta.allure:allure-selenide:$allureVersion",
-            "com.codeborne:selenide:$selenideVersion"
     )
 
     testRuntimeOnly (

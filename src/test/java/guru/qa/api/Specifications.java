@@ -1,5 +1,6 @@
 package guru.qa.api;
 
+import guru.qa.config.TestConfig;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
@@ -12,7 +13,7 @@ import static io.restassured.filter.log.LogDetail.ALL;
 public class Specifications {
     public static RequestSpecification requestSpec = with()
             .filter(withCustomTemplates())
-            .baseUri("https://reqres.in")
+            .baseUri(TestConfig.config.baseTestedURI())
             .basePath("/api")
             .contentType(ContentType.JSON)
             .log().all();

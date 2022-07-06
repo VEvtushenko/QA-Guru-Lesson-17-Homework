@@ -1,55 +1,67 @@
 package guru.qa.tests;
 
+import guru.qa.api.models.User;
+import guru.qa.api.models.UserData;
 import io.qameta.allure.*;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+import static guru.qa.api.Specifications.requestSpec;
+import static guru.qa.api.Specifications.responseSpecGet;
 import static guru.qa.data.TestData.*;
-import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
+import static io.restassured.RestAssured.*;
 import static io.restassured.http.ContentType.JSON;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Owner("Vladimir Evtushenko")
 @Feature("DemoQA")
 @Link(value = "QA Guru, Lesson 18, Lombok&Groovy Homework", url = "https://github.com/VEvtushenko/QA-Guru-Lesson-17-Homework")
 public class APITest extends TestBase {
+
     @Test
     @Description("Test get user information about Janet Weaver")
     @Severity(SeverityLevel.NORMAL)
-    @DisplayName("Test get user")
+    @DisplayName("Test get the user")
     void singleUserTest() {
-        when()
-                .get("api/users/2")
+        UserData userData =
+                given()
+                    .spec(requestSpec)
+                .when()
+                    .get("/users/2")
                 .then()
-                .statusCode(200)
-                .body("data.id", is(2),
-                        "data.email", equalTo("janet.weaver@reqres.in"),
-                        "data.first_name", equalTo("Janet"),
-                        "data.last_name", equalTo("Weaver"),
-                        "data.avatar", equalTo("https://reqres.in/img/faces/2-image.jpg"),
-                        "support.url", equalTo("https://reqres.in/#support-heading"),
-                        "support.text", hasToString("To keep ReqRes free, contributions towards server costs are appreciated!")
-                );
+                    .spec(responseSpecGet)
+                    .extract().as(UserData.class);
+
+        assertEquals(userData.getUser(), jannetWeaver);
     }
 
     @Test
     @Description("Create user")
     @Severity(SeverityLevel.NORMAL)
-    @DisplayName("Test get user")
-    void createUserTest() {
-        given().log().uri()
-                .log().body()
+    @DisplayName("Test create")
+    void createUserTest() throws java.io.IOException {
+        User newUser =
+                given()
+                    .spec(requestSpec)
                 .when()
-                .contentType(JSON)
-                .body(createUserJson)
-                .post("/api/users")
-                .then().log().all()
-                .statusCode(201)
-                .body("name", equalTo("Chzu Bajie"),
-                        "type", equalTo("Human-pig")
-                );
+                    .body(czhuBajie)
+                    .post("/users")
+                .then()
+                    .statusCode(201)
+                    .extract().as(User.class);
+
+//        User assertUser = jacksonMapper.readValue(new File("src/test/resources/request_data/czhu_bajie.json"), User.class);
+//        assertUser.setId(newUser.getId());
+//        assertEquals(newUser, assertUser);
+        System.out.println(newUser.getCreatedAt());
     }
 
 

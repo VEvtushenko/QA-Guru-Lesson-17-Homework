@@ -38,5 +38,4 @@ target/
 /gradlew.bat
 .todo
 *.properties
-*.json
 chart.png
